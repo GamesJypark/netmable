@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
             if(Vector2.Distance(transform.position, dirPos) == 1)
             {
                 transform.position = dirPos;
+                GameSystem.system.turnChange_button();
             }
         }
     }
