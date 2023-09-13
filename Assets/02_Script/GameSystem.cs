@@ -28,6 +28,7 @@ public class GameSystem : MonoBehaviour
     public GameObject ti; // 현재 턴 알리미
     public GameObject tcButton; // 턴 전환 버튼
     public GameObject SBF; // 소환 미리보기 오브젝트
+    public GameObject A_WARNNING; // 행동력 부족 경고 텍스트
     // Start is called before the first frame update
     void Awake()
     {
@@ -168,6 +169,10 @@ public class GameSystem : MonoBehaviour
             ActPoint -= selectCard.GetComponent<CardUse>().useActPoint;
             Instantiate(GameManager.gameManager.Formation[(selectCard.GetComponent<CardUse>().cardIndex)].GetComponent<Cards>().cardUnit, inputPos, Quaternion.identity);
             selectCard = null;
+        }
+        else
+        {
+            A_WARNNING.SetActive(true);
         }
         ActPointText.text = "행동력 : " + ActPoint;
         selectCard = null;
