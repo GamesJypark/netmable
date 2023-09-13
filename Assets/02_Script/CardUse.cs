@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -14,6 +15,7 @@ public class CardUse : MonoBehaviour, IPointerDownHandler
     }
     void IPointerDownHandler.OnPointerDown(UnityEngine.EventSystems.PointerEventData eventData)
     {
+        Instantiate(GameSystem.system.SBF);
         if(GameSystem.system.controlMode != 0)
         {        
             GameSystem.system.controlMode = 2;

@@ -6704,11 +6704,12 @@ MonoBehaviour:
   sizeMax: {x: 5, y: 3}
   turn: 0
   controlMode: 0
-  inputPos: {x: 0, y: 0}
+  inputPos: {x: 0, y: 0, z: 0}
   REtext: {fileID: 1437797696}
   ActPointText: {fileID: 1145298758}
   ti: {fileID: 1841119765}
   tcButton: {fileID: 159062473}
+  SBF: {fileID: 2966381923080732596, guid: 72a6a843b7e44164fb490efd3f931c01, type: 3}
 --- !u!114 &1578770203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7046,7 +7047,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1710189903}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 0, z: -1}
+  m_LocalPosition: {x: -3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

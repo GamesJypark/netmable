@@ -22,11 +22,12 @@ public class GameSystem : MonoBehaviour
     public Vector2 sizeMin, sizeMax; // 맵 최소~최대 사이즈
     public int turn; // 턴 구분(1은 플레이어, 2는 적)
     public int controlMode; // 컨트롤 하는 대상(1은 캐릭터, 2는 카드)
-    public Vector2 inputPos; // 입력받은 위치
+    public Vector3 inputPos; // 입력받은 위치
     public Text REtext; // 남아있는 적 알림 텍스트
     public Text ActPointText; // 남은 행동력 표시 텍스트
     public GameObject ti; // 현재 턴 알리미
     public GameObject tcButton; // 턴 전환 버튼
+    public GameObject SBF; // 소환 미리보기 오브젝트
     // Start is called before the first frame update
     void Awake()
     {
@@ -138,25 +139,27 @@ public class GameSystem : MonoBehaviour
     public void input(Vector2 pos) // 타일 위치 받기
     {
         inputPos = pos;
-        controlCount(); // 컨트롤 값에 따른 효과 발동
     }
     public void controlCount()
     {
-        switch(turn)
+        if(inputPos.x >= sizeMin.x && inputPos.y >= sizeMin.y && inputPos.x <= sizeMax.x && inputPos.y <= sizeMax.y)
         {
-            case 1:
-                if(controlMode == 1) // 플레이어 이동
-                {
-                    player.GetComponent<Player>().PlayerMove(inputPos);
-                }
-                else if(controlMode == 2) // 유닛 공격
-                {
-                    Summons();
-                }
-                break;
-            case 2:
-                break;
-        }   
+            switch(turn)
+            {
+                case 1:
+                    if(controlMode == 1) // 플레이어 이동
+                    {
+                        if(player.transform.position != inputPos) player.GetComponent<Player>().PlayerMove(inputPos);
+                    }
+                    else if(controlMode == 2) // 유닛 공격
+                    {
+                        Summons();
+                    }
+                    break;
+                case 2:
+                    break;
+            }
+        }
     }
     public void Summons()
     {
@@ -167,13 +170,17 @@ public class GameSystem : MonoBehaviour
             selectCard = null;
         }
         ActPointText.text = "행동력 : " + ActPoint;
+        selectCard = null;
     }
     public void enemyControl() // 적 행동
     {
-        for(int i = 0; enemys[i] != null; i++)
+        foreach(GameObject enemy in enemys)
         {
-            enemys[i].GetComponent<Enemy>().EnemyMove(player.transform, enemys[i].transform);
-            enemys[i].transform.GetChild(0).GetComponent<EnemyAttack>().EnemyAtc();
+            if(enemy != null)
+            {
+                enemy.GetComponent<Enemy>().EnemyMove(player.transform, enemy.transform);
+                enemy.transform.GetChild(0).GetComponent<EnemyAttack>().EnemyAtc();
+            }
         }
         Invoke("turnChangeNow", 2f);
     }
@@ -192,9 +199,9 @@ public class GameSystem : MonoBehaviour
     public void EnemyCheck()
     {
         int count = 0;
-        for(int i = 0; enemys[i] != null; i++)
+        foreach(GameObject enemy in enemys)
         {
-            count++;
+            if(enemy != null) count++;
         }
         REtext.text = "남은 적 : " + count;
     }

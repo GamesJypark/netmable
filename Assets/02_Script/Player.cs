@@ -15,6 +15,12 @@ public class Player : MonoBehaviour
             GameSystem.system.controlMode = 1;
         }
     }
+    private void OnMouseUp() {
+        if(GameSystem.system.controlMode == 1)
+        {
+            GameSystem.system.controlCount();
+        }
+    }
     public void PlayerMove(Vector2 dirPos)
     {
         if(GameSystem.system.controlMode != 0)
