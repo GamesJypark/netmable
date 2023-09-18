@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     }
     public void EnemyMove(Transform playerPos, Transform enemy)
     {
+        Debug.Log(enemy);
         int i = Random.Range(1, 3); // 위치 변경 난수값
         switch(i) // 플레이어 추격, 랜덤 위치 변경
         {
@@ -60,7 +61,7 @@ public class Enemy : MonoBehaviour
         Hp -= damage;
         if(Hp <= 0)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 

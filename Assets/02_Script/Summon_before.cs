@@ -30,7 +30,6 @@ public class Summon_before : MonoBehaviour
             foreach(Collider2D col in colliders)
             {
                 if(col.gameObject.tag == "dummyRange"){ 
-                    Debug.Log("asd");
                     col.gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 0, 0, 127);
                 }
             }

@@ -29,6 +29,9 @@ public class GameSystem : MonoBehaviour
     public GameObject tcButton; // 턴 전환 버튼
     public GameObject SBF; // 소환 미리보기 오브젝트
     public GameObject A_WARNNING; // 행동력 부족 경고 텍스트
+    int attackCount = 0; // 소환된 유닛 중 몇명이 행동했는가
+    int attackCount_enemy = 0; // 소환된 적 중 몇명이 행동했는가
+    int amountUnit_enemy = 0; // 스테이지 소환된 유닛
     // Start is called before the first frame update
     void Awake()
     {
@@ -50,10 +53,11 @@ public class GameSystem : MonoBehaviour
             case 1:
                 mapSetting();
                 cardSetting();
-                EnemySpwan(enemyPrefab[0], new Vector2(5, 2));
-                EnemySpwan(enemyPrefab[1], new Vector2(5, 0));
+                EnemySpwan(enemyPrefab[0], new Vector2(3.5f, 2));
+                EnemySpwan(enemyPrefab[1], new Vector2(3.5f, 0));
                 PlayerSpwan(new Vector2(-2, 0), player);
                 gameStart();
+                amountUnit_enemy = 2;
                 ActPoint = 5;
                 ActPointText.text = "행동력 : " + ActPoint;
                 break;
@@ -69,9 +73,9 @@ public class GameSystem : MonoBehaviour
     }
     private void mapSetting() // 맵 세팅
     {
-        for(int i = (int)sizeMin.y; i <= sizeMax.y; i++)
+        for(float i = sizeMin.y; i <= sizeMax.y; i++)
         {
-            for(int k = (int)sizeMin.x; k <= sizeMax.x; k++)
+            for(float k = sizeMin.x; k <= sizeMax.x; k++)
             {
                 Instantiate(tile, new Vector2(k, i), Quaternion.identity);
             }
@@ -107,10 +111,10 @@ public class GameSystem : MonoBehaviour
     public void turnChange() // 턴 변경 시 실행되는 메소드
     {
         EnemyCheck();
+        player.GetComponent<PlayerAttack>().playerAttack();
         PlayerAtk(); // 플레이어 공격 후 턴 체인지 함수 실행
         EnemyCheck();
         controlMode = 0;
-        Invoke("turnChangeNow", 2);
     }
     public void turnChangeNow()
     {
@@ -179,27 +183,51 @@ public class GameSystem : MonoBehaviour
     }
     public void enemyControl() // 적 행동
     {
-        foreach(GameObject enemy in enemys)
+        
+        if(amountUnit_enemy > attackCount_enemy)
         {
-            if(enemy != null)
+            if(enemys[attackCount_enemy] != null && enemys[attackCount_enemy].activeSelf != false)
             {
-                enemy.GetComponent<Enemy>().EnemyMove(player.transform, enemy.transform);
-                enemy.transform.GetChild(0).GetComponent<EnemyAttack>().EnemyAtc();
+                enemys[attackCount_enemy].GetComponent<Enemy>().EnemyMove(player.transform, enemys[attackCount_enemy].transform);
+                enemys[attackCount_enemy].transform.GetChild(0).GetComponent<EnemyAttack>().EnemyAtc();            
+                attackCount_enemy++;
+                EnemyCheck();
+                Invoke("enemyControl", 1);
+            }
+            else
+            {
+                attackCount_enemy++;
+                EnemyCheck();
+                enemyControl();
             }
         }
-        Invoke("turnChangeNow", 2f);
+        else
+        {
+            attackCount_enemy = 0;
+            EnemyCheck();
+            Invoke("turnChangeNow", 2f);
+        }
     }
     public void PlayerAtk() // 플레이어 공격
     {
-        player.GetComponent<PlayerAttack>().playerAttack();
-        for(int i = 0; i < cloneUnit.Length; i++)
+        int amountUnit = 0;
+        foreach(GameObject unit in cloneUnit)
         {
-            if(cloneUnit[i] != null)
-            {
-                cloneUnit[i].transform.GetChild(0).GetComponent<PlayerAttack>().playerAttack();
-            }
+            if(unit != null) amountUnit++;
         }
-        EnemyCheck();
+        if(amountUnit > attackCount)
+        {
+            cloneUnit[attackCount].transform.GetChild(0).GetComponent<PlayerAttack>().playerAttack();
+            attackCount++;
+            EnemyCheck();
+            Invoke("PlayerAtk", 1);
+        }
+        else
+        {
+            attackCount = 0;
+            EnemyCheck();
+            Invoke("turnChangeNow", 2f);
+        }
     }
     public void EnemyCheck()
     {

@@ -15,7 +15,6 @@ public class PlayerAttack : MonoBehaviour
             Collider2D[] colliders = Physics2D.OverlapBoxAll(new Vector2(transform.position.x + TagetPos[i].x, transform.position.y + TagetPos[i].y), AttackRange[i], 0);
             foreach(Collider2D col in colliders)
             {
-                Debug.Log(col.transform.position);
                 if(col.gameObject.tag == "tile")
                 {
                     col.gameObject.GetComponent<Tile>().isTileHot(true);
