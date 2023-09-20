@@ -21,6 +21,7 @@ public class Cards : MonoBehaviour, IPointerClickHandler
     }
     void IPointerClickHandler.OnPointerClick(UnityEngine.EventSystems.PointerEventData eventData) // 편성 화면에서 클릭 시 편성에 카드 등록
     {
+        GameSystem.system.gameObject.GetComponent<SoundManager>().PlayerAudio(1);
         if(isUnlock == false && Onfomation == false)
         {
             GameManager.gameManager.FormationRegister(this.gameObject);

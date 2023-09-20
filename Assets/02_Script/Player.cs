@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
     private void OnMouseDown() {
         if(GameSystem.system.controlMode != 0)
         {
-            Debug.Log("ddd");
             GameSystem.system.controlMode = 1;
         }
     }

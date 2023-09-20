@@ -330,10 +330,10 @@ TextureImporter:
         x: 3933
         y: 3037
         width: 84
-        height: 1027
+        height: 1023
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 14, y: 13, z: 12, w: 12}
       outline: []
       physicsShape: []
       tessellationDetail: -1

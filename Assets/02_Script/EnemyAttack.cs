@@ -8,6 +8,7 @@ public class EnemyAttack : MonoBehaviour
 
     public void EnemyAtc() // 적의 공격
     {
+        Debug.Log(gameObject);
         for(int i = 0; i < AttackRange.Length; i++)
         {
             Collider2D[] colliders = Physics2D.OverlapBoxAll(this.transform.position, AttackRange[i], 0); // 콜라이더 박스 소환

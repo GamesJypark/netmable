@@ -217,10 +217,19 @@ public class GameSystem : MonoBehaviour
         }
         if(amountUnit > attackCount)
         {
-            cloneUnit[attackCount].transform.GetChild(0).GetComponent<PlayerAttack>().playerAttack();
-            attackCount++;
-            EnemyCheck();
-            Invoke("PlayerAtk", 1);
+            if(cloneUnit[attackCount] != null && cloneUnit[attackCount].activeSelf != false)
+            {
+                cloneUnit[attackCount].transform.GetChild(0).GetComponent<PlayerAttack>().playerAttack();
+                attackCount++;
+                EnemyCheck();
+                Invoke("PlayerAtk", 1);
+            }
+            else
+            {
+                attackCount++;
+                EnemyCheck();
+                PlayerAtk();                
+            }
         }
         else
         {
