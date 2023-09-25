@@ -30,7 +30,9 @@ public class GameSystem : MonoBehaviour
     public GameObject tcButton; // 턴 전환 버튼
     public GameObject SBF; // 소환 미리보기 오브젝트
     public GameObject A_WARNNING; // 행동력 부족 경고 텍스트
+    public Text TurnUI; // 몇턴이 지났는지 보여주는 ui
     int attackCount = 0; // 소환된 유닛 중 몇명이 행동했는가
+    int TurnCheck = 0;
     int attackCount_enemy = 0; // 소환된 적 중 몇명이 행동했는가
     int amountUnit_enemy = 0; // 스테이지 소환된 유닛
     // Start is called before the first frame update
@@ -137,6 +139,8 @@ public class GameSystem : MonoBehaviour
                 controlMode = 1;
                 tcButton.SetActive(true);
                 FindAnyObjectByType<FightEft>().GetComponent<FightEft>().MoveToZero();
+                TurnCheck++;
+                TurnUI.text = "" + TurnCheck;
                 break;
         }
         EnemyCheck();
