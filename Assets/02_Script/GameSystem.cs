@@ -136,6 +136,7 @@ public class GameSystem : MonoBehaviour
                 turn = 1;// 유효 턴 값을 플레이어로 설정
                 controlMode = 1;
                 tcButton.SetActive(true);
+                FindAnyObjectByType<FightEft>().GetComponent<FightEft>().MoveToZero();
                 break;
         }
         EnemyCheck();

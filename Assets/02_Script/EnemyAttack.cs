@@ -8,6 +8,7 @@ public class EnemyAttack : MonoBehaviour
 
     public void EnemyAtc() // 적의 공격
     {
+        FindAnyObjectByType<FightEft>().GetComponent<FightEft>().MoveToObj(transform);
         Debug.Log(gameObject);
         for(int i = 0; i < AttackRange.Length; i++)
         {

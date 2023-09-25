@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class hp_bar : MonoBehaviour
 {
@@ -11,8 +13,9 @@ public class hp_bar : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void hit(float MaxHp, float remainHp)
     {
-        
+        float rotation = (remainHp / MaxHp) * 100;
+        transform.localEulerAngles = new Vector3(transform.rotation.x, transform.rotation.y, 360 - ((float)360 / (float)100) * rotation);
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Units : MonoBehaviour
 {
+    public int maxHp;
     public int Hp;
     public int AttackPoint;
     public GameObject AtkEft;
@@ -30,5 +31,6 @@ public class Units : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        transform.GetComponentInChildren<hp_bar>().hit(maxHp, Hp);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Burst.Intrinsics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlayerAttack : MonoBehaviour
     public Vector2[] TagetPos;
     public void playerAttack()
     {
+        FindAnyObjectByType<FightEft>().GetComponent<FightEft>().MoveToObj(transform);
         for(int i = 0; i < TagetPos.Length; i++)
         {
             Collider2D[] colliders = Physics2D.OverlapBoxAll(new Vector2(transform.position.x + TagetPos[i].x, transform.position.y + TagetPos[i].y), AttackRange[i], 0);
