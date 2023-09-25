@@ -10,6 +10,7 @@ using System.Reflection;
 
 public class GameSystem : MonoBehaviour
 {
+    public GameObject MainCamera;
     public int ActPoint;
     public static GameSystem system; // 게임 시스템 싱글톤
     public GameObject player;
@@ -60,6 +61,7 @@ public class GameSystem : MonoBehaviour
                 amountUnit_enemy = 2;
                 ActPoint = 5;
                 ActPointText.text = "행동력 : " + ActPoint;
+                MainCamera.GetComponent<BGM_Manager>().bgmChange();
                 break;
         }
 
